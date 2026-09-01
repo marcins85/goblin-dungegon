@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cgbe7p3q6lolo"]
+
+[ext_resource type="MeshLibrary" uid="uid://dhj0frwtr6nfm" path="res://assets/meshlibs/walls-tiles.meshlib" id="1_43ixu"]
+
+[node name="BaseRoom" type="Node3D" unique_id=1324909713]
+
+[node name="Floors" type="GridMap" parent="." unique_id=524320100]
+mesh_library = ExtResource("1_43ixu")
+cell_center_y = false
