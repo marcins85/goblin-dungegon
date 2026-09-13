@@ -1,9 +1,21 @@
 [gd_scene format=3 uid="uid://cgbe7p3q6lolo"]
 
 [ext_resource type="MeshLibrary" uid="uid://dhj0frwtr6nfm" path="res://assets/meshlibs/walls-tiles.meshlib" id="1_43ixu"]
+[ext_resource type="Script" uid="uid://bf1ejc6e1lidm" path="res://scenes/rooms/BaseRoom.cs" id="1_oxyh5"]
+[ext_resource type="MeshLibrary" uid="uid://cy6aqww01qwaf" path="res://assets/meshlibs/ceiling-tiles.meshlib" id="2_4x8xk"]
 
 [node name="BaseRoom" type="Node3D" unique_id=1324909713]
+script = ExtResource("1_oxyh5")
 
 [node name="Floors" type="GridMap" parent="." unique_id=524320100]
+unique_name_in_owner = true
 mesh_library = ExtResource("1_43ixu")
 cell_center_y = false
+
+[node name="Ceilings" type="GridMap" parent="." unique_id=718247650]
+unique_name_in_owner = true
+mesh_library = ExtResource("2_4x8xk")
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(134, 65451, 1441792)
+}
