@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dsapv6yk2jvsq"]
+
+[ext_resource type="PackedScene" uid="uid://gbrq1dvge4vt" path="res://scenes/levels/base_level.tscn" id="1_n1503"]
+[ext_resource type="PackedScene" uid="uid://xg4ydfeh5n76" path="res://scenes/rooms/foyer.tscn" id="2_0mf82"]
+[ext_resource type="PackedScene" uid="uid://dnnwa8ryioq4q" path="res://scenes/rooms/entrance.tscn" id="3_iemd2"]
+
+[node name="Level-01-Welcome" unique_id=1093852638 instance=ExtResource("1_n1503")]
+
+[node name="Foyer" parent="Rooms" parent_id_path=PackedInt32Array(586919552) index="0" unique_id=1324909713 instance=ExtResource("2_0mf82")]
+
+[node name="Entrence" parent="Rooms" parent_id_path=PackedInt32Array(586919552) index="1" unique_id=723354172 instance=ExtResource("3_iemd2")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 24, 0, 2)
+
+[node name="PlayerSpawn" parent="." index="1" unique_id=714112916]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.814203, 1.6713142, 2.0945148)
+
+[node name="Floor" parent="Hallways" parent_id_path=PackedInt32Array(135223540) index="0" unique_id=1735925640]
+data = {
+"cells": PackedInt32Array(8, 0, 1441793, 8, 1, 1048577)
+}
