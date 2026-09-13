@@ -31,7 +31,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _Process(double delta)
 	{
-		_inputDir = Input.GetVector("starfe_left", "strafe_right", "backward", "forward");
+		_inputDir = Input.GetVector("strafe_left", "strafe_right", "backward", "forward");
 		_movementSpeed = Input.IsActionPressed("run") ? _runSpeed : _walkSpeed;
 	}
 
@@ -40,17 +40,54 @@ public partial class Player : CharacterBody3D
         CheckJumpInput();
 		ProcessGravity();
 
-		// var input3DSpace = new Vector3()
+		var input3DSpace = new Vector3(_inputDir.X, 0, -_inputDir.Y);
+		var desiredVelocity = Transform.Basis * input3DSpace * _movementSpeed;
+
+		var velocity = Velocity;
+		if (input3DSpace == Vector3.Zero)
+		{
+			velocity.X = Mathf.MoveToward(Velocity.X, 0, (float)delta * _acceleration);
+			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, (float)delta * _acceleration);
+		}
+		else
+		{
+			velocity.X = Mathf.MoveToward(Velocity.X, desiredVelocity.X, (float)delta * _acceleration);
+			velocity.Z = Mathf.MoveToward(Velocity.Z, desiredVelocity.Z, (float)delta * _acceleration);
+		}
+
+		Velocity = velocity;
+		MoveAndSlide();
     }
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventMouseMotion motion)
+		{
+			RotateY(-motion.Relative.X * _moueseSensitivity);
+			_camera.RotateX(-motion.Relative.Y * _moueseSensitivity);
+			var camRotation = _camera.Rotation;
+			camRotation.X = Mathf.Clamp(_camera.Rotation.X, MAX_CAMERA_LOOK_DOWN, MAX_CAMERA_LOOK_UP);
+			_camera.Rotation = camRotation;
+		}	
+	}
 
     private void ProcessGravity()
     {
-        throw new NotImplementedException();
+        if (!IsOnFloor())
+		{
+			var velocity = Velocity;
+			velocity.Y -= _gravity;
+			Velocity = velocity;
+		}
     }
-
 
     private void CheckJumpInput()
     {
-        throw new NotImplementedException();
+        if (IsOnFloor() && Input.IsActionJustPressed("jump"))
+		{
+			var velocity = Velocity;
+			velocity.Y += _jumpForce;
+			Velocity = velocity;
+		}
     }
 }
