@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://gbrq1dvge4vt"]
+
+[ext_resource type="Script" uid="uid://drg1mb5fcik16" path="res://scenes/levels/BaseLevel.cs" id="1_md458"]
+
+[node name="BaseLevel" type="Node3D" unique_id=1093852638]
+script = ExtResource("1_md458")
+
+[node name="Rooms" type="Node3D" parent="." unique_id=586919552]
+
+[node name="PlayerSpawn" type="Node3D" parent="." unique_id=714112916]
+unique_name_in_owner = true
