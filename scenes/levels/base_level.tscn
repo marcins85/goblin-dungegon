@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://gbrq1dvge4vt"]
 
 [ext_resource type="Script" uid="uid://drg1mb5fcik16" path="res://scenes/levels/BaseLevel.cs" id="1_md458"]
+[ext_resource type="MeshLibrary" uid="uid://dhj0frwtr6nfm" path="res://assets/meshlibs/walls-tiles.meshlib" id="2_uk53i"]
 
 [node name="BaseLevel" type="Node3D" unique_id=1093852638]
 script = ExtResource("1_md458")
@@ -9,3 +10,12 @@ script = ExtResource("1_md458")
 
 [node name="PlayerSpawn" type="Node3D" parent="." unique_id=714112916]
 unique_name_in_owner = true
+
+[node name="Hallways" type="Node3D" parent="." unique_id=135223540]
+
+[node name="Floor" type="GridMap" parent="Hallways" unique_id=1735925640]
+mesh_library = ExtResource("2_uk53i")
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65523, 65530, 3)
+}
