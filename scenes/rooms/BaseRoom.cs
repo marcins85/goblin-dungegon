@@ -18,7 +18,7 @@ public partial class BaseRoom : Node3D
 
     private void FillCeilings()
     {
-        foreach (string cellName in new[] { "Ground", "Hole Corner", "Hole Side", "Hole UTurn" })
+        foreach (string cellName in new[] { "Ground", "Hole-Corner", "Hole-Side", "Hole-UTurn" })
 		{
 			_cellIdsWithNoCeiling.Add(_floors.MeshLibrary.FindItemByName(cellName));
 		}
