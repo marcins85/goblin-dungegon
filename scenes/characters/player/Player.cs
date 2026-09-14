@@ -17,6 +17,7 @@ public partial class Player : CharacterBody3D
 	private float _gravity;
 	
 	private Camera3D _camera;
+	private AnimationPlayer _animationPlayer;
 	private readonly float MAX_CAMERA_LOOK_UP = Mathf.DegToRad(70);
 	private readonly float MAX_CAMERA_LOOK_DOWN = Mathf.DegToRad(-70);
 	private Vector2 _inputDir = Vector2.Zero;
@@ -26,6 +27,7 @@ public partial class Player : CharacterBody3D
 	public override void _Ready()
 	{
 		_camera = GetNode<Camera3D>("Camera3D");
+		_animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
@@ -53,6 +55,16 @@ public partial class Player : CharacterBody3D
 		{
 			velocity.X = Mathf.MoveToward(Velocity.X, desiredVelocity.X, (float)delta * _acceleration);
 			velocity.Z = Mathf.MoveToward(Velocity.Z, desiredVelocity.Z, (float)delta * _acceleration);
+		}
+
+		var horizontalVelocity = new Vector3(velocity.X, 0, velocity.Z);
+		if (horizontalVelocity.LengthSquared() > 0.1 && IsOnFloor())
+		{
+			_animationPlayer.Play("run");
+		}
+		else
+		{
+			_animationPlayer.Play("idle");
 		}
 
 		Velocity = velocity;
