@@ -3,10 +3,25 @@
 [ext_resource type="Script" uid="uid://kacde3vv707u" path="res://scenes/characters/player/Player.cs" id="1_7uws0"]
 [ext_resource type="PackedScene" uid="uid://cv2xg2vk5yjx3" path="res://assets/meshes/characters/character.glb" id="2_t61fv"]
 [ext_resource type="PackedScene" uid="uid://fb8eceyjnqy1" path="res://assets/meshes/weapons/sword.glb" id="3_686vu"]
+[ext_resource type="Texture2D" uid="uid://gu4krexafw2q" path="res://assets/meshes/weapons/sword_dungeon-texture.png" id="4_hss88"]
+[ext_resource type="PackedScene" uid="uid://bods5i63irr0h" path="res://assets/meshes/weapons/axe.glb" id="5_qd3e3"]
+[ext_resource type="Texture2D" uid="uid://cm71g1gu143ca" path="res://assets/meshes/weapons/axe_dungeon-texture.png" id="6_6avc5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_frt5n"]
 margin = 0.3
 height = 2.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qd3e3"]
+albedo_texture = ExtResource("4_hss88")
+texture_filter = 0
+use_z_clip_scale = true
+z_clip_scale = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mk55u"]
+albedo_texture = ExtResource("6_6avc5")
+texture_filter = 0
+use_z_clip_scale = true
+z_clip_scale = 0.5
 
 [node name="Player" type="CharacterBody3D" unique_id=870949982]
 script = ExtResource("1_7uws0")
@@ -29,7 +44,7 @@ near = 0.001
 
 [node name="character" parent="." unique_id=19213751 instance=ExtResource("2_t61fv")]
 
-[node name="Skeleton3D" parent="character/Armature" parent_id_path=PackedInt32Array(19213751, 1639337390) index="0" unique_id=1875634426]
+[node name="Skeleton3D" parent="character/Armature" parent_id_path=PackedInt32Array(19213751, 1330932186) index="0" unique_id=304525456]
 bones/1/rotation = Quaternion(-0.2608185, 1.1508321e-07, -3.1091986e-08, 0.9653878)
 bones/3/rotation = Quaternion(-0.1781106, 0.006952127, -0.8447039, 0.50468165)
 bones/4/rotation = Quaternion(-0.5197056, -0.03146447, -0.02226875, 0.85347533)
@@ -41,17 +56,28 @@ bones/12/rotation = Quaternion(0.014208632, -0.0463591, 0.9871597, 0.15219925)
 bones/13/rotation = Quaternion(0.38037163, 0.0077449, 0.06930008, 0.92220116)
 
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="character/Armature/Skeleton3D" index="1" unique_id=1964013731]
-transform = Transform3D(-0.4067232, -0.81307024, 0.41652486, -0.89202166, 0.2550553, -0.37315416, 0.19716367, -0.5233196, -0.829013, 0.69248253, 1.0087547, -0.43269378)
+transform = Transform3D(-0.4067231, -0.8130699, 0.4165247, -0.8920214, 0.2550552, -0.37315398, 0.19716363, -0.5233194, -0.82901275, 0.5821063, 0.8479672, -0.36372572)
 bone_name = "Hand.R"
 bone_idx = 5
 
 [node name="WeaponPlaceholder" type="Node3D" parent="character/Armature/Skeleton3D/BoneAttachment3D" unique_id=1619468548]
-transform = Transform3D(-0.46628982, 0.60305166, 0.6472268, 7.450581e-09, 0.731634, -0.6816977, -0.884632, -0.31786874, -0.3411535, 0, 0, 0)
+transform = Transform3D(0.63561225, -0.27058986, 0.72303414, 0.37693626, -0.708565, -0.5965359, 0.6737329, 0.6517031, -0.3483776, 0, 0, 0)
 
 [node name="sword" parent="character/Armature/Skeleton3D/BoneAttachment3D/WeaponPlaceholder" unique_id=1420013685 instance=ExtResource("3_686vu")]
 transform = Transform3D(1, -7.450581e-09, -1.4901161e-08, 1.4901161e-08, 1, -2.9802322e-08, -4.4703484e-08, 0, 1, 0, 0, 0)
+visible = false
 
-[node name="AnimationPlayer" parent="character" index="1" unique_id=1006271759]
+[node name="Sword" parent="character/Armature/Skeleton3D/BoneAttachment3D/WeaponPlaceholder/sword" index="0" unique_id=1174933011]
+surface_material_override/0 = SubResource("StandardMaterial3D_qd3e3")
+
+[node name="axe" parent="character/Armature/Skeleton3D/BoneAttachment3D/WeaponPlaceholder" unique_id=1446215569 instance=ExtResource("5_qd3e3")]
+
+[node name="Axe" parent="character/Armature/Skeleton3D/BoneAttachment3D/WeaponPlaceholder/axe" index="0" unique_id=2059337722]
+surface_material_override/0 = SubResource("StandardMaterial3D_mk55u")
+
+[node name="AnimationPlayer" parent="character" index="1" unique_id=1607633676]
 autoplay = &"idle"
 
 [editable path="character"]
+[editable path="character/Armature/Skeleton3D/BoneAttachment3D/WeaponPlaceholder/sword"]
+[editable path="character/Armature/Skeleton3D/BoneAttachment3D/WeaponPlaceholder/axe"]
