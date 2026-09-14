@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dsapv6yk2jvsq" path="res://scenes/levels/level_01_welcome.tscn" id="2_1fp7r"]
 [ext_resource type="PackedScene" uid="uid://bn57euvhc56ii" path="res://scenes/ui/ui.tscn" id="2_sl2e5"]
+[ext_resource type="PackedScene" uid="uid://cruxmvy5cdy0n" path="res://scenes/characters/enemies/goblin.tscn" id="3_1fp7r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4rhad"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -26,3 +27,6 @@ shadow_enabled = true
 [node name="UI" parent="." unique_id=1449570767 instance=ExtResource("2_sl2e5")]
 
 [node name="Level-01-Welcome" parent="." unique_id=1093852638 instance=ExtResource("2_1fp7r")]
+
+[node name="Goblin" parent="." unique_id=1405185324 instance=ExtResource("3_1fp7r")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -5.019831)

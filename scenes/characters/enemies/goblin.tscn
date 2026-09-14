@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://cruxmvy5cdy0n"]
+
+[ext_resource type="PackedScene" uid="uid://cv2xg2vk5yjx3" path="res://assets/meshes/characters/character.glb" id="1_jcgx1"]
+[ext_resource type="Texture2D" uid="uid://bhev2art8fpj" path="res://assets/textures/skin-goblin.png" id="2_ik1ic"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_frt5n"]
+height = 2.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcgx1"]
+albedo_texture = ExtResource("2_ik1ic")
+texture_filter = 0
+
+[node name="Goblin" type="CharacterBody3D" unique_id=1405185324]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1780493575]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+shape = SubResource("CapsuleShape3D_frt5n")
+
+[node name="character" parent="." unique_id=19213751 instance=ExtResource("1_jcgx1")]
+
+[node name="Skeleton3D" parent="character/Armature" parent_id_path=PackedInt32Array(19213751, 1205825967) index="0" unique_id=1818248691]
+bones/1/rotation = Quaternion(-0.2608185, 1.1508321e-07, -3.1091986e-08, 0.9653878)
+bones/3/rotation = Quaternion(-0.1781106, 0.006952127, -0.8447039, 0.50468165)
+bones/4/rotation = Quaternion(-0.5197056, -0.03146447, -0.02226875, 0.85347533)
+bones/6/rotation = Quaternion(-0.014208643, -0.046359096, 0.9871597, -0.15219927)
+bones/7/rotation = Quaternion(0.38037166, -0.0077449004, -0.06930007, 0.92220116)
+bones/9/rotation = Quaternion(-0.36561823, -0.18045183, 0.73759365, 0.53825283)
+bones/10/rotation = Quaternion(-0.56524074, 0.0012397004, -0.040283673, 0.823941)
+bones/12/rotation = Quaternion(0.014208632, -0.0463591, 0.9871597, 0.15219925)
+bones/13/rotation = Quaternion(0.38037163, 0.0077449, 0.06930008, 0.92220116)
+
+[node name="Character" parent="character/Armature/Skeleton3D" index="0" unique_id=1112672632]
+surface_material_override/0 = SubResource("StandardMaterial3D_jcgx1")
+
+[node name="AnimationPlayer" parent="character" index="1" unique_id=619001721]
+autoplay = &"idle"
+
+[editable path="character"]
