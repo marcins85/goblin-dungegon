@@ -24,12 +24,14 @@ public partial class Player : CharacterBody3D
 	private float _movementSpeed;
 	private RayCast3D _selectRaycast;
 	private IHighlightable _currentPickableFocusedItem = null;
+	private EquipmentComponent _equipment;
 
 	public override void _Ready()
 	{
 		_camera = GetNode<Camera3D>("Camera3D");
 		_animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
 		_selectRaycast = _camera.GetNode<RayCast3D>("SelectRayCast");
+		_equipment = GetNode<EquipmentComponent>("EquipmentComponent");
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
@@ -37,6 +39,11 @@ public partial class Player : CharacterBody3D
 	{
 		_inputDir = Input.GetVector("strafe_left", "strafe_right", "backward", "forward");
 		_movementSpeed = Input.IsActionPressed("run") ? _runSpeed : _walkSpeed;
+
+		if (Input.IsActionJustPressed("use") && CanPickupObject())
+		{
+			PickupObject();
+		}
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -122,4 +129,19 @@ public partial class Player : CharacterBody3D
 			_currentPickableFocusedItem?.Highlight();
 		}
     }
+
+	private bool CanPickupObject()
+	{
+		return _currentPickableFocusedItem != null;
+	}
+
+	private void PickupObject()
+	{
+		if (_currentPickableFocusedItem is IPickable pickable)
+		{
+			_equipment.EquipWeapon(pickable.WeaponData, pickable.Transform());
+			pickable.Delete();
+			_currentPickableFocusedItem = null;
+		}
+	}
 }

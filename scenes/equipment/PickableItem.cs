@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PickableItem : Area3D, IHighlightable
+public partial class PickableItem : Area3D, IHighlightable, IPickable
 {
 	private static readonly Material HighlighMaterial =
 		GD.Load<Material>("res://materials/highlight_material.tres");
@@ -12,13 +12,15 @@ public partial class PickableItem : Area3D, IHighlightable
 	private MeshInstance3D _meshNode;
 	private CollisionShape3D _collision;
 
-	public override void _Ready()
+    public WeaponData WeaponData => _weaponData;
+
+    public override void _Ready()
 	{
 		_collision = GetNode<CollisionShape3D>("CollisionShape3D");
 		_highlightMaterial = (Material)HighlighMaterial.Duplicate();
-		if (_weaponData != null)
+		if (WeaponData != null)
 		{
-			Node3D pickableObject = _weaponData.glbMesh.Instantiate<Node3D>();
+			Node3D pickableObject = WeaponData.glbMesh.Instantiate<Node3D>();
 			if (pickableObject != null)
 			{
 				AddChild(pickableObject);
@@ -37,4 +39,14 @@ public partial class PickableItem : Area3D, IHighlightable
     {
         _meshNode.MaterialOverride = null;
     }
+
+	public Transform3D Transform()
+	{
+		return GlobalTransform;
+	}
+
+	public void Delete()
+	{
+		QueueFree();
+	}
 }

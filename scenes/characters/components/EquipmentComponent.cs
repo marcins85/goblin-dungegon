@@ -21,13 +21,32 @@ public partial class EquipmentComponent : Node3D
 		}
 	}
 
-    private void EquipWeapon(WeaponData data)
+	public void EquipWeapon(WeaponData data)
+	{
+		EquipWeapon(data, Transform3D.Identity);
+	}
+
+    public void EquipWeapon(WeaponData data, Transform3D pickupTransform)
     {
         var weaponData = (WeaponData)data.Duplicate();
 		var weapon = EquipedItemPrefab.Instantiate<EquipedItem>();
 		weapon.weaponData = weaponData;
 		weapon.hasZClip = _hasZClip;
 		_weaponPlaceholder.AddChild(weapon);
+
+		if (pickupTransform != Transform3D.Identity)
+		{
+			weapon.GlobalTransform = pickupTransform;
+			AnimateToHand(weapon);
+		}
     }
 
+    private void AnimateToHand(EquipedItem weapon)
+    {
+        var tween = weapon.CreateTween();
+		tween.SetTrans(Tween.TransitionType.Quad);
+		tween.SetEase(Tween.EaseType.Out);
+		tween.Parallel().TweenProperty(weapon, "position", Vector3.Zero, 0.4);
+		tween.Parallel().TweenProperty(weapon, "rotation", Vector3.Zero, 0.2);
+    }
 }
