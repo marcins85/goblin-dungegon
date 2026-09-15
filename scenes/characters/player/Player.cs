@@ -139,7 +139,7 @@ public partial class Player : CharacterBody3D
 	{
 		if (_currentPickableFocusedItem is IPickable pickable)
 		{
-			_equipment.EquipWeapon(pickable.WeaponData, pickable.Transform());
+			_equipment.EquipWeapon(pickable.WeaponData, pickable.TransformItem());
 			pickable.Delete();
 			_currentPickableFocusedItem = null;
 		}

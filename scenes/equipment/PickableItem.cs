@@ -40,7 +40,7 @@ public partial class PickableItem : Area3D, IHighlightable, IPickable
         _meshNode.MaterialOverride = null;
     }
 
-	public Transform3D Transform()
+	public Transform3D TransformItem()
 	{
 		return GlobalTransform;
 	}
