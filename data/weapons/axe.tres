@@ -13,5 +13,5 @@ _damageMax = 6
 _reach = 6.0
 _throwRotationSpeed = 50.0
 _throwMovementSpeed = 12.0
-_glbMesh = ExtResource("1_ev13c")
+glbMesh = ExtResource("1_ev13c")
 metadata/_custom_type_script = "uid://bd64fncfst2g1"

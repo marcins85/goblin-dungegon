@@ -22,12 +22,14 @@ public partial class Player : CharacterBody3D
 	private readonly float MAX_CAMERA_LOOK_DOWN = Mathf.DegToRad(-70);
 	private Vector2 _inputDir = Vector2.Zero;
 	private float _movementSpeed;
-
+	private RayCast3D _selectRaycast;
+	private IHighlightable _currentPickableFocusedItem = null;
 
 	public override void _Ready()
 	{
 		_camera = GetNode<Camera3D>("Camera3D");
 		_animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
+		_selectRaycast = _camera.GetNode<RayCast3D>("SelectRayCast");
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 	}
 
@@ -69,9 +71,10 @@ public partial class Player : CharacterBody3D
 
 		Velocity = velocity;
 		MoveAndSlide();
+		CheckForSelection();
     }
 
-	public override void _Input(InputEvent @event)
+    public override void _Input(InputEvent @event)
 	{
 		if (@event is InputEventMouseMotion motion)
 		{
@@ -100,6 +103,23 @@ public partial class Player : CharacterBody3D
 			var velocity = Velocity;
 			velocity.Y += _jumpForce;
 			Velocity = velocity;
+		}
+    }
+
+	private void CheckForSelection()
+    {
+		IHighlightable targetNode = null;
+		if (_selectRaycast.IsColliding())
+		{
+			var collider = _selectRaycast.GetCollider();
+			targetNode = collider as IHighlightable;
+		}
+
+		if (targetNode != _currentPickableFocusedItem)
+		{
+			_currentPickableFocusedItem?.Unhighlight();
+			_currentPickableFocusedItem = targetNode;
+			_currentPickableFocusedItem?.Highlight();
 		}
     }
 }

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bwguee4bk173b"]
+
+[ext_resource type="Script" uid="uid://bv0qxpna82hjy" path="res://EquipedItem.cs" id="1_hu1j3"]
+
+[node name="EquipedItem" type="Node3D" unique_id=1689324650]
+script = ExtResource("1_hu1j3")

@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://gbrq1dvge4vt" path="res://scenes/levels/base_level.tscn" id="1_n1503"]
 [ext_resource type="PackedScene" uid="uid://xg4ydfeh5n76" path="res://scenes/rooms/foyer.tscn" id="2_0mf82"]
 [ext_resource type="PackedScene" uid="uid://dnnwa8ryioq4q" path="res://scenes/rooms/entrance.tscn" id="3_iemd2"]
+[ext_resource type="PackedScene" uid="uid://buwbkjuklr2ut" path="res://scenes/equipment/pickable_item.tscn" id="4_xicp7"]
+[ext_resource type="Resource" uid="uid://bd2xdgi3ca0p4" path="res://data/weapons/sword.tres" id="5_h8tnv"]
 
 [node name="Level-01-Welcome" unique_id=1093852638 instance=ExtResource("1_n1503")]
 
@@ -18,3 +20,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.814203, 1.6713142, 2.09451
 data = {
 "cells": PackedInt32Array(8, 0, 1441793, 8, 1, 1048577)
 }
+
+[node name="PickableItem" parent="." index="3" unique_id=991656621 instance=ExtResource("4_xicp7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.559601, 0, 10.125012)
+_weaponData = ExtResource("5_h8tnv")

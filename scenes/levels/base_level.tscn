@@ -16,6 +16,7 @@ unique_name_in_owner = true
 [node name="Floor" type="GridMap" parent="Hallways" unique_id=1735925640]
 mesh_library = ExtResource("2_uk53i")
 cell_center_y = false
+collision_mask = 0
 data = {
 "cells": PackedInt32Array(65523, 65530, 3)
 }

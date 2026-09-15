@@ -21,7 +21,7 @@ public partial class WeaponData : Resource
 	[Export]
 	private float _throwMovementSpeed;
 	[Export]
-	private PackedScene _glbMesh;
+	public PackedScene glbMesh;
 
 	public int GetDamageDealt()
 	{
