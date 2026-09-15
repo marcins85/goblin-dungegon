@@ -12,7 +12,13 @@ public partial class PickableItem : Area3D, IHighlightable, IPickable
 	private MeshInstance3D _meshNode;
 	private CollisionShape3D _collision;
 
-    public WeaponData WeaponData => _weaponData;
+    public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
+	public new Transform3D GlobalTransform { get => base.GlobalTransform; set => base.GlobalTransform = value; }
+
+	public Node3D AsNode()
+    {
+        return this;
+    }
 
     public override void _Ready()
 	{
@@ -39,11 +45,6 @@ public partial class PickableItem : Area3D, IHighlightable, IPickable
     {
         _meshNode.MaterialOverride = null;
     }
-
-	public Transform3D TransformItem()
-	{
-		return GlobalTransform;
-	}
 
 	public void Delete()
 	{

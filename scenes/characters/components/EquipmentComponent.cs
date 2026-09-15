@@ -6,6 +6,9 @@ public partial class EquipmentComponent : Node3D
 	private static readonly PackedScene EquipedItemPrefab =
 		GD.Load<PackedScene>("res://scenes/equipment/equiped_item.tscn");
 
+	private static readonly PackedScene ThrownItemPrefab =
+		GD.Load<PackedScene>("res://scenes/equipment/throwed_item.tscn");
+
 	[Export]
 	private WeaponData _weaponData;
 	[Export]
@@ -32,6 +35,7 @@ public partial class EquipmentComponent : Node3D
 		var weapon = EquipedItemPrefab.Instantiate<EquipedItem>();
 		weapon.weaponData = weaponData;
 		weapon.hasZClip = _hasZClip;
+		_weaponData = weaponData;
 		_weaponPlaceholder.AddChild(weapon);
 
 		if (pickupTransform != Transform3D.Identity)
@@ -41,6 +45,22 @@ public partial class EquipmentComponent : Node3D
 		}
     }
 
+	public void ThrowWeapon()
+	{
+		if (HasWeapon())
+		{
+			var thrownItem = ThrownItemPrefab.Instantiate<ThrowedItem>();
+			if (thrownItem is IPickable thrown && thrownItem is Node3D node)
+			{
+				thrown.WeaponData = _weaponData;
+				thrown.GlobalTransform = _weaponPlaceholder.GlobalTransform;
+				GetTree().GetRoot().AddChild(node);
+				_weaponData = null;
+				_weaponPlaceholder.GetChild(0).QueueFree();
+			}
+		}
+	}
+
     private void AnimateToHand(EquipedItem weapon)
     {
         var tween = weapon.CreateTween();
@@ -49,4 +69,9 @@ public partial class EquipmentComponent : Node3D
 		tween.Parallel().TweenProperty(weapon, "position", Vector3.Zero, 0.4);
 		tween.Parallel().TweenProperty(weapon, "rotation", Vector3.Zero, 0.2);
     }
+
+	public bool HasWeapon()
+	{
+		return _weaponData != null && _weaponPlaceholder.GetChildCount() > 0;
+	}
 }

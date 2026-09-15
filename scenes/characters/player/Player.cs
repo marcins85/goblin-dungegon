@@ -44,6 +44,12 @@ public partial class Player : CharacterBody3D
 		{
 			PickupObject();
 		}
+
+		if (Input.IsActionJustPressed("throw") && _equipment.HasWeapon())
+		{
+			GD.Print("Throw");
+			_equipment.ThrowWeapon();
+		}
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -139,7 +145,7 @@ public partial class Player : CharacterBody3D
 	{
 		if (_currentPickableFocusedItem is IPickable pickable)
 		{
-			_equipment.EquipWeapon(pickable.WeaponData, pickable.TransformItem());
+			_equipment.EquipWeapon(pickable.WeaponData, pickable.GlobalTransform);
 			pickable.Delete();
 			_currentPickableFocusedItem = null;
 		}
