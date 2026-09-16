@@ -21,6 +21,10 @@ public partial class WeaponData : Resource
 	[Export]
 	public float throwMovementSpeed;
 	[Export]
+	public Vector3 impaleLocalTranslation;
+	[Export]
+	public float imapleLocalRotation;
+	[Export]
 	public PackedScene glbMesh;
 
 	public int GetDamageDealt()
