@@ -37,7 +37,7 @@ collide_with_bodies = false
 
 [node name="character" parent="." unique_id=19213751 instance=ExtResource("2_t61fv")]
 
-[node name="Skeleton3D" parent="character/Armature" parent_id_path=PackedInt32Array(19213751, 1330932186) index="0" unique_id=304525456]
+[node name="Skeleton3D" parent="character/Armature" index="0"]
 bones/0/position = Vector3(0, 0.63719213, -0.058584828)
 bones/1/rotation = Quaternion(-0.26081848, 1.1508321e-07, -3.109199e-08, 0.96538794)
 bones/3/rotation = Quaternion(-0.17811054, 0.0069522588, -0.84470385, 0.50468177)
@@ -58,12 +58,16 @@ bone_idx = 5
 unique_name_in_owner = true
 transform = Transform3D(0.63561225, -0.27058986, 0.72303414, 0.37693626, -0.708565, -0.5965359, 0.6737329, 0.6517031, -0.3483776, 0, 0, 0)
 
-[node name="AnimationPlayer" parent="character" index="1" unique_id=1607633676]
+[node name="AnimationPlayer" parent="character" index="1"]
 autoplay = &"idle"
 
-[node name="EquipmentComponent" parent="." unique_id=1203043463 node_paths=PackedStringArray("_weaponPlaceholder") instance=ExtResource("3_686vu")]
+[node name="EquipmentComponent" parent="." unique_id=1203043463 node_paths=PackedStringArray("_weaponPlaceholder", "_weaponSpawnPosition") instance=ExtResource("3_686vu")]
 unique_name_in_owner = true
 _weaponPlaceholder = NodePath("../character/Armature/Skeleton3D/BoneAttachment3D/WeaponPlaceholder")
+_weaponSpawnPosition = NodePath("../WeaponSpawnPosition")
 _hasZClip = true
+
+[node name="WeaponSpawnPosition" type="Node3D" parent="." unique_id=817665318]
+transform = Transform3D(-0.015707366, 0.99987656, 0, -0.99987656, -0.015707366, 0, 0, 0, 1, 0.35, 1.4793586, -0.779)
 
 [editable path="character"]

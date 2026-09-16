@@ -12,6 +12,7 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 
 	public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
 	public new Transform3D GlobalTransform { get => base.GlobalTransform; set => base.GlobalTransform = value; }
+	private Basis _originalBasis;
 
 	public Node3D AsNode()
 	{
@@ -26,6 +27,7 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 
 	public override void _Ready()
 	{
+		_originalBasis = GlobalTransform.Basis;
 		_collision = GetNode<CollisionShape3D>("CollisionShape");
 		if (WeaponData != null)
 		{
@@ -35,6 +37,9 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 				AddChild(thrownObject);
 				var meshNode = thrownObject.GetChild<MeshInstance3D>(0);
 				_collision.Shape = meshNode.Mesh.CreateConvexShape();
+				GravityScale = 0;
+				LinearVelocity = -GlobalBasis.Z * _weaponData.throwMovementSpeed;
+				AngularVelocity = -GlobalBasis.Y * _weaponData.throwRotationSpeed;
 				BodyEntered += OnBodyEntered;
 			}
 		}
@@ -43,10 +48,18 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 	private bool sleepingChanged = false;
 	private void OnBodyEntered(Node body)
 	{
-		if (!sleepingChanged)
+		if (body is Enemy enemy)
 		{
-			SleepingStateChanged += OnSleep;
-			sleepingChanged = true;
+			enemy.Impale(this, _originalBasis);
+		}
+		else
+		{
+			GravityScale = 1;
+			if (!sleepingChanged)
+			{
+				SleepingStateChanged += OnSleep;
+				sleepingChanged = true;
+			}
 		}
 
 		// if (!IsConnected("sleeping_state_changed", new Callable(this, nameof(OnSleep))))

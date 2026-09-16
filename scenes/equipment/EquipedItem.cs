@@ -7,13 +7,14 @@ public partial class EquipedItem : Node3D
 		GD.Load<Material>("res://materials/zclip_material.tres");
 
 	[Export]
-	public WeaponData weaponData;
+	private WeaponData _weaponData;
+	public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
 	// [Export]
 	public bool hasZClip;
 
 	public override void _Ready()
 	{
-		var equipedObject = weaponData.glbMesh.Instantiate();
+		var equipedObject = WeaponData.glbMesh.Instantiate();
 		if (equipedObject != null)
 		{
 			AddChild(equipedObject);

@@ -5,31 +5,31 @@ using System;
 public partial class WeaponData : Resource
 {
 	[Export]
-	private string _name;
+	public string name;
 	[Export]
-	private int _condition;
+	public int condition;
 	[Export]
-	private int _maxCondition;
+	public int maxCondition;
 	[Export]
-	private int _damageMin;
+	public int damageMin;
 	[Export]
-	private int _damageMax;
+	public int damageMax;
 	[Export]
-	private float _reach;
+	public float reach;
 	[Export]
-	private float _throwRotationSpeed;
+	public float throwRotationSpeed;
 	[Export]
-	private float _throwMovementSpeed;
+	public float throwMovementSpeed;
 	[Export]
 	public PackedScene glbMesh;
 
 	public int GetDamageDealt()
 	{
-		return GD.RandRange(_damageMin, _damageMax);
+		return GD.RandRange(damageMin, damageMax);
 	}
 
 	public void DecreaseCondition(int amount)
 	{
-		_condition = Mathf.Clamp(_condition - amount, 0, _maxCondition);
+		condition = Mathf.Clamp(condition - amount, 0, maxCondition);
 	}
 }

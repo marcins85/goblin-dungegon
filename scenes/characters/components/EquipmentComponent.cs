@@ -14,6 +14,8 @@ public partial class EquipmentComponent : Node3D
 	[Export]
 	private Node3D _weaponPlaceholder;
 	[Export]
+	private Node3D _weaponSpawnPosition;
+	[Export]
 	private bool _hasZClip;
 
 	public override void _Ready()
@@ -33,7 +35,7 @@ public partial class EquipmentComponent : Node3D
 	{
 		var weaponData = (WeaponData)data.Duplicate();
 		var weapon = EquipedItemPrefab.Instantiate<EquipedItem>();
-		weapon.weaponData = weaponData;
+		weapon.WeaponData = weaponData;
 		weapon.hasZClip = _hasZClip;
 		_weaponData = weaponData;
 		_weaponPlaceholder.AddChild(weapon);
@@ -53,7 +55,7 @@ public partial class EquipmentComponent : Node3D
 			if (thrownItem is IPickable thrown && thrownItem is Node3D node)
 			{
 				thrown.WeaponData = _weaponData;
-				thrown.GlobalTransform = _weaponPlaceholder.GlobalTransform;
+				thrown.GlobalTransform = _weaponSpawnPosition.GlobalTransform;
 				GameState.Instance.CurrentLevel.AddChild(node);
 				_weaponData = null;
 				_weaponPlaceholder.GetChild(0).QueueFree();
