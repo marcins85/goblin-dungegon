@@ -29,9 +29,9 @@ public partial class EquipmentComponent : Node3D
 		EquipWeapon(data, Transform3D.Identity);
 	}
 
-    public void EquipWeapon(WeaponData data, Transform3D pickupTransform)
-    {
-        var weaponData = (WeaponData)data.Duplicate();
+	public void EquipWeapon(WeaponData data, Transform3D pickupTransform)
+	{
+		var weaponData = (WeaponData)data.Duplicate();
 		var weapon = EquipedItemPrefab.Instantiate<EquipedItem>();
 		weapon.weaponData = weaponData;
 		weapon.hasZClip = _hasZClip;
@@ -43,7 +43,7 @@ public partial class EquipmentComponent : Node3D
 			weapon.GlobalTransform = pickupTransform;
 			AnimateToHand(weapon);
 		}
-    }
+	}
 
 	public void ThrowWeapon()
 	{
@@ -54,21 +54,21 @@ public partial class EquipmentComponent : Node3D
 			{
 				thrown.WeaponData = _weaponData;
 				thrown.GlobalTransform = _weaponPlaceholder.GlobalTransform;
-				GetTree().GetRoot().AddChild(node);
+				GameState.Instance.CurrentLevel.AddChild(node);
 				_weaponData = null;
 				_weaponPlaceholder.GetChild(0).QueueFree();
 			}
 		}
 	}
 
-    private void AnimateToHand(EquipedItem weapon)
-    {
-        var tween = weapon.CreateTween();
+	private void AnimateToHand(EquipedItem weapon)
+	{
+		var tween = weapon.CreateTween();
 		tween.SetTrans(Tween.TransitionType.Quad);
 		tween.SetEase(Tween.EaseType.Out);
 		tween.Parallel().TweenProperty(weapon, "position", Vector3.Zero, 0.4);
 		tween.Parallel().TweenProperty(weapon, "rotation", Vector3.Zero, 0.2);
-    }
+	}
 
 	public bool HasWeapon()
 	{

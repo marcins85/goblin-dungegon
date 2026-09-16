@@ -10,21 +10,21 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 	private WeaponData _weaponData;
 	private CollisionShape3D _collision;
 
-    public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
+	public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
 	public new Transform3D GlobalTransform { get => base.GlobalTransform; set => base.GlobalTransform = value; }
 
-    public Node3D AsNode()
-    {
-        return this;
-    }
+	public Node3D AsNode()
+	{
+		return this;
+	}
 
 
-    public void Delete()
-    {
-        QueueFree();
-    }
+	public void Delete()
+	{
+		QueueFree();
+	}
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		_collision = GetNode<CollisionShape3D>("CollisionShape");
 		if (WeaponData != null)
@@ -41,8 +41,8 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 	}
 
 	private bool sleepingChanged = false;
-    private void OnBodyEntered(Node body)
-    {
+	private void OnBodyEntered(Node body)
+	{
 		if (!sleepingChanged)
 		{
 			SleepingStateChanged += OnSleep;
@@ -51,16 +51,16 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 
 		// if (!IsConnected("sleeping_state_changed", new Callable(this, nameof(OnSleep))))
 		// {
-        // 	Connect("sleeping_state_changed", new Callable(this, nameof(OnSleep)));
+		// 	Connect("sleeping_state_changed", new Callable(this, nameof(OnSleep)));
 		// }
-    }
+	}
 
 	private void OnSleep()
 	{
 		var pickableItem = PickableItemPrefab.Instantiate<PickableItem>();
 		pickableItem.WeaponData = _weaponData;
 		pickableItem.GlobalTransform = GlobalTransform;
-		GetTree().GetRoot().AddChild(pickableItem);
+		GameState.Instance.CurrentLevel.AddChild(pickableItem);
 		QueueFree();
 	}
 }

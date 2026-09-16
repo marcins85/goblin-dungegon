@@ -8,13 +8,21 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Goblin Dungeon"
-run/main_scene="uid://bvvl4isvd8bjn"
+run/main_scene="res://scenes/world/world.tscn"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 run/max_fps=240
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameState="*uid://dh0wjwt0bekco"
 
 [debug]
 
@@ -30,6 +38,10 @@ window/vsync/vsync_mode=0
 [dotnet]
 
 project/assembly_name="Goblin Dungeon"
+
+[filesystem]
+
+import/blender/enabled=false
 
 [input]
 
