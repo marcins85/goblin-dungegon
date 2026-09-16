@@ -13,5 +13,6 @@ damageMax = 5
 reach = 5.0
 throwRotationSpeed = 20.0
 throwMovementSpeed = 12.0
+impaleLocalTranslation = Vector3(0, 0, 0.7)
 glbMesh = ExtResource("1_ff0qn")
 metadata/_custom_type_script = "uid://bd64fncfst2g1"

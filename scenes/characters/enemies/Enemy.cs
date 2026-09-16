@@ -21,6 +21,8 @@ public partial class Enemy : CharacterBody3D
             impaledItem.WeaponData = thrownItem.WeaponData;
             _torso.AddChild(impaledItem);
             impaledItem.GlobalTransform = new Transform3D(basis, impaledItem.GlobalPosition);
+            impaledItem.TranslateObjectLocal(impaledItem.WeaponData.impaleLocalTranslation);
+            impaledItem.RotateObjectLocal(Vector3.Up, impaledItem.WeaponData.imapleLocalRotation);
             thrownItem.QueueFree();
         }
     }
