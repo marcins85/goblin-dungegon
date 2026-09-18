@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Enemy : CharacterBody3D
 {
@@ -12,11 +13,43 @@ public partial class Enemy : CharacterBody3D
     private float _impaleIntensity = 100f;
     private float _durationRagdollSimulation = 3f;
 
+    public enum State { IDLE, MOVING, THROWING };
+    private State _state;
+    private EnemyState _stateNode;
+    private Dictionary<State, Func<Enemy, EnemyState>> _stateMap;
+
     public override void _Ready()
     {
         _torso = GetNode<PhysicalBone3D>("%Physical Bone Torso");
         _skeletonSimulator = GetNode<PhysicalBoneSimulator3D>("%PhysicalBoneSimulator3D");
         _collision = GetNode<CollisionShape3D>("%CollisionShape");
+
+        _stateMap = new Dictionary<State, Func<Enemy, EnemyState>>
+        {
+            { State.IDLE, Enemy => new EnemyStateMoving(this) },
+            { State.MOVING, Enemy => new EnemyStateMoving(this) }
+        };
+
+        SwitchState(State.IDLE);
+    }
+
+    public void SwitchState(State newState)
+    {
+        if (_stateNode != null)
+        {
+            _stateNode.QueueFree();
+        }
+
+        _stateNode = _stateMap[newState](this);
+        _stateNode.TransitionRequested += OnTransitionRequested;
+        _stateNode.Name = $"State_{newState}";
+        _state = newState;
+        AddChild(_stateNode);
+    }
+
+    private void OnTransitionRequested(int newState)
+    {
+        SwitchState((State)newState);
     }
 
     public void Impale(ThrowedItem thrownItem, Basis basis)
