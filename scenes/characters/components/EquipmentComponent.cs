@@ -47,7 +47,7 @@ public partial class EquipmentComponent : Node3D
 		}
 	}
 
-	public void ThrowWeapon()
+	public void ThrowWeapon(bool isBeingDropped = false)
 	{
 		if (HasWeapon())
 		{
@@ -55,7 +55,15 @@ public partial class EquipmentComponent : Node3D
 			if (thrownItem is IPickable thrown && thrownItem is Node3D node)
 			{
 				thrown.WeaponData = _weaponData;
-				thrown.GlobalTransform = _weaponSpawnPosition.GlobalTransform;
+				thrownItem.isBeingDropped = isBeingDropped;
+				
+				var spawnTransform = _weaponPlaceholder.GlobalTransform;
+				if (!isBeingDropped)
+				{
+					spawnTransform = _weaponSpawnPosition.GlobalTransform;
+				}
+				thrown.GlobalTransform = spawnTransform;
+
 				GameState.Instance.CurrentLevel.AddChild(node);
 				_weaponData = null;
 				_weaponPlaceholder.GetChild(0).QueueFree();

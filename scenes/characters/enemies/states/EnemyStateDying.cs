@@ -11,6 +11,7 @@ public partial class EnemyStateDying : EnemyState
 
     public override void _EnterTree()
 	{
+		_enemy.equipment.ThrowWeapon(true);
 		_enemy.collision.Disabled = true;
         _enemy.skeletonSimulator.Active = true;
         _enemy.skeletonSimulator.PhysicalBonesStartSimulation();

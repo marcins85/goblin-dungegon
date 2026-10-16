@@ -13,6 +13,7 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 	public WeaponData WeaponData { get => _weaponData; set => _weaponData = value; }
 	public new Transform3D GlobalTransform { get => base.GlobalTransform; set => base.GlobalTransform = value; }
 	private Basis _originalBasis;
+	public bool isBeingDropped;
 
 	public Node3D AsNode()
 	{
@@ -37,9 +38,12 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 				AddChild(thrownObject);
 				var meshNode = thrownObject.GetChild<MeshInstance3D>(0);
 				_collision.Shape = meshNode.Mesh.CreateConvexShape();
-				GravityScale = 0;
-				LinearVelocity = -GlobalBasis.Z * _weaponData.throwMovementSpeed;
-				AngularVelocity = -GlobalBasis.Y * _weaponData.throwRotationSpeed;
+				if (!isBeingDropped)
+				{
+					GravityScale = 0;
+					LinearVelocity = -GlobalBasis.Z * _weaponData.throwMovementSpeed;
+					AngularVelocity = -GlobalBasis.Y * _weaponData.throwRotationSpeed;
+				}
 				BodyEntered += OnBodyEntered;
 			}
 		}
@@ -48,7 +52,7 @@ public partial class ThrowedItem : RigidBody3D, IPickable
 	private bool sleepingChanged = false;
 	private void OnBodyEntered(Node body)
 	{
-		if (body is Enemy enemy)
+		if (body is Enemy enemy && !isBeingDropped)
 		{
 			enemy.Impale(this, _originalBasis);
 		}

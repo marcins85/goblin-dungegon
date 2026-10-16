@@ -10,6 +10,7 @@ public partial class Enemy : CharacterBody3D
     public PhysicalBone3D torso;
     public PhysicalBoneSimulator3D skeletonSimulator;
     public CollisionShape3D collision;
+    public EquipmentComponent equipment;
     public float impaleIntensity = 100f;
     public AnimationPlayer animationPlayer;
 
@@ -23,6 +24,7 @@ public partial class Enemy : CharacterBody3D
         torso = GetNode<PhysicalBone3D>("%Physical Bone Torso");
         skeletonSimulator = GetNode<PhysicalBoneSimulator3D>("%PhysicalBoneSimulator3D");
         collision = GetNode<CollisionShape3D>("%CollisionShape");
+        equipment = GetNode<EquipmentComponent>("%EquipmentComponent");
         animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
 
         _stateMap = new Dictionary<State, Func<Enemy, EnemyStateData, EnemyState>>
