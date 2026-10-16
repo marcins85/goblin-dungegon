@@ -7,14 +7,15 @@ public partial class EnemyStateDead : EnemyState
     {
     }
 
-    // Called when the node enters the scene tree for the first time.
-
-    public override void _Ready()
+    public override void _EnterTree()
 	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		foreach (var child in _enemy.skeletonSimulator.GetChildren())
+        {
+            if (child is PhysicalBone3D bone)
+            {
+                var boneRID = bone.GetRid();
+                PhysicsServer3D.BodySetState(boneRID, PhysicsServer3D.BodyState.Sleeping, true);
+            }
+        }
 	}
 }

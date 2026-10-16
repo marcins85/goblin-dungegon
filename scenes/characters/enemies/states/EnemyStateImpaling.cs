@@ -12,14 +12,17 @@ public partial class EnemyStateImpaling : EnemyState
 		var impaledItem = Enemy.EquipedItemPrefab.Instantiate<EquipedItem>();
         if (impaledItem != null)
         {
-            impaledItem.WeaponData = _data.thrownItem.WeaponData;
+            impaledItem.WeaponData = _data.ThrownItem.WeaponData;
             _enemy.torso.AddChild(impaledItem);
-            var itemBasis = new Transform3D(_data.thrownBasis, impaledItem.GlobalPosition);
+            var itemBasis = new Transform3D(_data.ThrownBasis, impaledItem.GlobalPosition);
             impaledItem.GlobalTransform = itemBasis;
             impaledItem.TranslateObjectLocal(impaledItem.WeaponData.impaleLocalTranslation);
             impaledItem.RotateObjectLocal(Vector3.Up, impaledItem.WeaponData.imapleLocalRotation);
-            _data.thrownItem.QueueFree();
-            _enemy.RegisterDeath(_data.thrownBasis * Vector3.Forward * _enemy.impaleIntensity + Vector3.Up * _enemy.impaleIntensity);
+            _data.ThrownItem.QueueFree();
+
+            var data = new EnemyStateData();
+            data.Impulse = _data.ThrownBasis * Vector3.Forward * _enemy.impaleIntensity + Vector3.Up * _enemy.impaleIntensity;
+            TransitionState(Enemy.State.DYING, data);
         }
 	}
 }

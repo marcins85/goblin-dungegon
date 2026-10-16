@@ -3,18 +3,25 @@ using System;
 
 public partial class EnemyStateDying : EnemyState
 {
+    private float durationRagdollSimulation = 3f;
+
     public EnemyStateDying(Enemy enemy, EnemyStateData data) : base(enemy, data)
     {
     }
 
-    // Called when the node enters the scene tree for the first time.
-
-    public override void _Ready()
+    public override void _EnterTree()
 	{
+		_enemy.collision.Disabled = true;
+        _enemy.skeletonSimulator.Active = true;
+        _enemy.skeletonSimulator.PhysicalBonesStartSimulation();
+        _enemy.torso.ApplyImpulse(_data.Impulse);
+        var timer = GetTree().CreateTimer(durationRagdollSimulation);
+        timer.Timeout += FreezeRagdoll;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+    private void FreezeRagdoll()
+    {
+        TransitionState(Enemy.State.DEAD);
+    }
+
 }
