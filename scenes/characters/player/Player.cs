@@ -27,7 +27,7 @@ public partial class Player : CharacterBody3D
 	public IHighlightable currentPickableFocusedItem = null;
 	public EquipmentComponent equipment;
 
-	public enum State { MOVING, PICKING_UP, THROWING };
+	public enum State { MOVING, PICKING_UP, THROWING, SLASHING };
 	private State _state;
 	private PlayerState _stateNode;
 	private Dictionary<State, Func<Player, PlayerState>> _stateMap;
@@ -44,7 +44,8 @@ public partial class Player : CharacterBody3D
 		{
 			{ State.MOVING, Player => new PlayerStateMoving(this) },
 			{ State.PICKING_UP, Player => new PlayerStatePickingUp(this) },
-			{ State.THROWING, Player => new PlayerStateThrowing(this) }
+			{ State.SLASHING, Player => new PlayerStateThrowing(this) },
+			{ State.THROWING, Player => new PlayerStateThrowing(this) },
 		};
 		SwitchState(State.MOVING);
 	}

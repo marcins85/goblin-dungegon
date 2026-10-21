@@ -18,6 +18,13 @@ public partial class PlayerStateMoving : PlayerState
 		if (Input.IsActionJustPressed("throw") && _player.equipment.HasWeapon())
 		{
 			TransitionState(Player.State.THROWING);
+			GD.Print("Throwing");
+		}
+
+		if (Input.IsActionJustPressed("action") && _player.equipment.HasWeapon())
+		{
+			TransitionState(Player.State.SLASHING);
+			GD.Print("Slashing");
 		}
 	}
 
