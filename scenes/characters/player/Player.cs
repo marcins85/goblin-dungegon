@@ -44,8 +44,8 @@ public partial class Player : CharacterBody3D
 		{
 			{ State.MOVING, Player => new PlayerStateMoving(this) },
 			{ State.PICKING_UP, Player => new PlayerStatePickingUp(this) },
-			{ State.SLASHING, Player => new PlayerStateThrowing(this) },
 			{ State.THROWING, Player => new PlayerStateThrowing(this) },
+			{ State.SLASHING, Player => new PlayerStateSlashing(this) },
 		};
 		SwitchState(State.MOVING);
 	}

@@ -13,8 +13,16 @@ public partial class Enemy : CharacterBody3D
     public EquipmentComponent equipment;
     public float impaleIntensity = 100f;
     public AnimationPlayer animationPlayer;
+    public Area3D playerDetectionArea;
+    public RayCast3D weaponReachRaycast;
+    
+    [Export]
+    private Player _player;
+    [Export]
+    public ulong durationBetweenAttacks;
+    public ulong timeSinceLastAttack;
 
-    public enum State { MOVING, IMPALING, DYING, DEAD };
+    public enum State { MOVING, IMPALING, DYING, DEAD, SLASHING };
     private State _state;
     private EnemyState _stateNode;
     private Dictionary<State, Func<Enemy, EnemyStateData, EnemyState>> _stateMap;
@@ -26,6 +34,8 @@ public partial class Enemy : CharacterBody3D
         collision = GetNode<CollisionShape3D>("%CollisionShape");
         equipment = GetNode<EquipmentComponent>("%EquipmentComponent");
         animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
+        playerDetectionArea = GetNode<Area3D>("%PlayerDetectionArea");
+        weaponReachRaycast = GetNode<RayCast3D>("%WeaponReachRaycast");
 
         _stateMap = new Dictionary<State, Func<Enemy, EnemyStateData, EnemyState>>
         {
@@ -33,10 +43,22 @@ public partial class Enemy : CharacterBody3D
             { State.IMPALING, (enemy, data) => new EnemyStateImpaling(enemy, data) },
             { State.DYING, (enemy, data) => new EnemyStateDying(enemy, data) },
             { State.DEAD, (enemy, data) => new EnemyStateDead(enemy, data) },
+            { State.SLASHING, (enemy, data) => new EnemyStateSlashing(enemy, data) },
         };
 
+        playerDetectionArea.BodyEntered += OnPlayerDetected;
         SwitchState(State.MOVING);
     }
+
+    private void OnPlayerDetected(Node3D body)
+    {
+        if (body is Player player)
+        {
+            _player = player;
+            GD.Print("Player detected!");
+        }
+    }
+
 
     public void SwitchState(State newState, EnemyStateData data = null)
     {
@@ -65,27 +87,18 @@ public partial class Enemy : CharacterBody3D
         SwitchState(State.IMPALING, data);
     }
 
-    // public void RegisterDeath()
-    // {
-    //     RegisterDeath(Vector3.Zero);
-    // }
+    public bool HasRegisteredPlayer()
+    {
+        return _player != null && IsInstanceValid(_player);
+    }
 
-    // public void RegisterDeath(Vector3 impulse)
-    // {
-    //     var data = new EnemyStateData();
-    //     data.Impulse = impulse;
-    //     SwitchState(State.DYING, data);
-    // }
+    public bool IsPlayerWithinReach()
+    {
+        if (HasRegisteredPlayer() && equipment.HasWeapon())
+        {
+            return weaponReachRaycast.IsColliding();
+        }
 
-    // private void FreezeRagdoll()
-    // {
-    //     foreach (var child in skeletonSimulator.GetChildren())
-    //     {
-    //         if (child is PhysicalBone3D bone)
-    //         {
-    //             var boneRID = bone.GetRid();
-    //             PhysicsServer3D.BodySetState(boneRID, PhysicsServer3D.BodyState.Sleeping, true);
-    //         }
-    //     }
-    // }
+        return false;
+    }
 }

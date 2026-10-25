@@ -10,19 +10,21 @@ public partial class EquipmentComponent : Node3D
 		GD.Load<PackedScene>("res://scenes/equipment/throwed_item.tscn");
 
 	[Export]
-	private WeaponData _weaponData;
+	public WeaponData weaponData;
 	[Export]
 	private Node3D _weaponPlaceholder;
 	[Export]
 	private Node3D _weaponSpawnPosition;
 	[Export]
+	private RayCast3D _weaponReachRaycast;
+	[Export]
 	private bool _hasZClip;
 
 	public override void _Ready()
 	{
-		if (_weaponData != null)
+		if (weaponData != null)
 		{
-			EquipWeapon(_weaponData);
+			EquipWeapon(weaponData);
 		}
 	}
 
@@ -37,8 +39,10 @@ public partial class EquipmentComponent : Node3D
 		var weapon = EquipedItemPrefab.Instantiate<EquipedItem>();
 		weapon.WeaponData = weaponData;
 		weapon.hasZClip = _hasZClip;
-		_weaponData = weaponData;
+		this.weaponData = weaponData;
 		_weaponPlaceholder.AddChild(weapon);
+		var targetPosition = _weaponReachRaycast.TargetPosition;
+		targetPosition.Z = -Mathf.Sqrt(this.weaponData.reach);
 
 		if (pickupTransform != Transform3D.Identity)
 		{
@@ -54,7 +58,7 @@ public partial class EquipmentComponent : Node3D
 			var thrownItem = ThrownItemPrefab.Instantiate<ThrowedItem>();
 			if (thrownItem is IPickable thrown && thrownItem is Node3D node)
 			{
-				thrown.WeaponData = _weaponData;
+				thrown.WeaponData = weaponData;
 				thrownItem.isBeingDropped = isBeingDropped;
 				
 				var spawnTransform = _weaponPlaceholder.GlobalTransform;
@@ -65,7 +69,7 @@ public partial class EquipmentComponent : Node3D
 				thrown.GlobalTransform = spawnTransform;
 
 				GameState.Instance.CurrentLevel.AddChild(node);
-				_weaponData = null;
+				weaponData = null;
 				_weaponPlaceholder.GetChild(0).QueueFree();
 			}
 		}
@@ -82,6 +86,6 @@ public partial class EquipmentComponent : Node3D
 
 	public bool HasWeapon()
 	{
-		return _weaponData != null && _weaponPlaceholder.GetChildCount() > 0;
+		return weaponData != null && _weaponPlaceholder.GetChildCount() > 0;
 	}
 }

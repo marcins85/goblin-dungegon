@@ -12,5 +12,20 @@ public partial class EnemyStateMoving : EnemyState
         _enemy.animationPlayer.Play("idle");
     }
 
+    public override void _PhysicsProcess(double delta)
+    {
+        if (_enemy.HasRegisteredPlayer())
+        {
+            if (_enemy.IsPlayerWithinReach() && CanAttack())
+            {
+                _enemy.timeSinceLastAttack = Time.GetTicksMsec();
+                TransitionState(Enemy.State.SLASHING);
+            }
+        }
+    }
 
+    private bool CanAttack()
+    {
+        return Time.GetTicksMsec() - _enemy.timeSinceLastAttack > _enemy.durationBetweenAttacks;
+    }
 }
