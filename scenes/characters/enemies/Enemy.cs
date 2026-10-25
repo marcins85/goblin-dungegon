@@ -15,6 +15,7 @@ public partial class Enemy : CharacterBody3D
     public AnimationPlayer animationPlayer;
     public Area3D playerDetectionArea;
     public RayCast3D weaponReachRaycast;
+    public Node health;
     
     [Export]
     private Player _player;
@@ -22,7 +23,7 @@ public partial class Enemy : CharacterBody3D
     public ulong durationBetweenAttacks;
     public ulong timeSinceLastAttack;
 
-    public enum State { MOVING, IMPALING, DYING, DEAD, SLASHING };
+    public enum State { MOVING, IMPALING, DYING, DEAD, SLASHING, HURT };
     private State _state;
     private EnemyState _stateNode;
     private Dictionary<State, Func<Enemy, EnemyStateData, EnemyState>> _stateMap;
@@ -36,6 +37,7 @@ public partial class Enemy : CharacterBody3D
         animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
         playerDetectionArea = GetNode<Area3D>("%PlayerDetectionArea");
         weaponReachRaycast = GetNode<RayCast3D>("%WeaponReachRaycast");
+        health = GetNode<Node>("%HealthComponent");
 
         _stateMap = new Dictionary<State, Func<Enemy, EnemyStateData, EnemyState>>
         {
@@ -44,6 +46,7 @@ public partial class Enemy : CharacterBody3D
             { State.DYING, (enemy, data) => new EnemyStateDying(enemy, data) },
             { State.DEAD, (enemy, data) => new EnemyStateDead(enemy, data) },
             { State.SLASHING, (enemy, data) => new EnemyStateSlashing(enemy, data) },
+            { State.HURT, (enemy, data) => new EnemyStateHurt(enemy, data) },
         };
 
         playerDetectionArea.BodyEntered += OnPlayerDetected;
@@ -55,7 +58,6 @@ public partial class Enemy : CharacterBody3D
         if (body is Player player)
         {
             _player = player;
-            GD.Print("Player detected!");
         }
     }
 
@@ -100,5 +102,12 @@ public partial class Enemy : CharacterBody3D
         }
 
         return false;
+    }
+
+    public void TryReciveHit(int damage)
+    {
+        var data = new EnemyStateData();
+        data.Damage = damage;
+        SwitchState(Enemy.State.HURT, data);
     }
 }

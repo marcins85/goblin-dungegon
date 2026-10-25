@@ -15,7 +15,6 @@ public partial class PlayerStateThrowing : PlayerState
 
 	private void OnAnimationFinished(StringName animName)
 	{
-		GD.Print("ThrowWeapon in Throwing State!");
 		_player.equipment.ThrowWeapon();
 		TransitionState(Player.State.MOVING);
 	}

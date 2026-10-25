@@ -26,6 +26,8 @@ public partial class Player : CharacterBody3D
 	private RayCast3D _selectRaycast;
 	public IHighlightable currentPickableFocusedItem = null;
 	public EquipmentComponent equipment;
+	public RayCast3D weaponReachRaycast;
+	public Node health;
 
 	public enum State { MOVING, PICKING_UP, THROWING, SLASHING };
 	private State _state;
@@ -38,6 +40,9 @@ public partial class Player : CharacterBody3D
 		animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
 		_selectRaycast = _camera.GetNode<RayCast3D>("SelectRayCast");
 		equipment = GetNode<EquipmentComponent>("EquipmentComponent");
+		weaponReachRaycast = GetNode<RayCast3D>("%WeaponReachRaycast");
+		health = GetNode<Node>("%HealthComponent");
+
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 
 		_stateMap = new Dictionary<State, Func<Player, PlayerState>>

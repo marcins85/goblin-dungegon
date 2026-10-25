@@ -3,6 +3,10 @@ using System;
 
 public partial class PlayerStateSlashing : PlayerState
 {
+	private readonly static float TIME_EMIT_DAMAGE = 200f;
+	private float _timeStartSlash = Time.GetTicksMsec();
+	private bool _hasEmitedDamage = false;
+
     public PlayerStateSlashing(Player player) : base(player)
     {
     }
@@ -11,9 +15,28 @@ public partial class PlayerStateSlashing : PlayerState
     public override void _EnterTree()
     {
 		_player.animationPlayer.Play("slash");
-		GD.Print("animation slash");
 		_player.animationPlayer.AnimationFinished += OnAnimationFinished;
+
+		
     }
+
+    public override void _Process(double delta)
+    {
+		float timeElapsed = Time.GetTicksMsec() - _timeStartSlash;
+		if (!_hasEmitedDamage && timeElapsed > TIME_EMIT_DAMAGE)
+		{
+			if (_player.weaponReachRaycast.IsColliding())
+			{
+				if (_player.weaponReachRaycast.GetCollider() is Enemy enemy)
+				{
+					_hasEmitedDamage = true;
+					int damage = _player.equipment.weaponData.GetDamageDealt();
+					enemy.TryReciveHit(damage);
+				}
+			}
+		}
+    }
+
 
     public override void _PhysicsProcess(double delta)
     {

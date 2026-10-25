@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bhev2art8fpj" path="res://assets/textures/skin-goblin.png" id="2_ik1ic"]
 [ext_resource type="PackedScene" uid="uid://diup0u36qxq34" path="res://scenes/characters/components/equipment_component.tscn" id="3_ewb0t"]
 [ext_resource type="Resource" uid="uid://bf33rxlvuw8st" path="res://data/weapons/axe.tres" id="5_lahws"]
+[ext_resource type="Script" uid="uid://bs3xojcdq6evl" path="res://scenes/characters/components/health_component.gd" id="6_yjp8u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_frt5n"]
 height = 2.2
@@ -314,5 +315,12 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 target_position = Vector3(0, 0, -2)
 collision_mask = 2
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1882605707]
+unique_name_in_owner = true
+script = ExtResource("6_yjp8u")
+max_life = 8
+current_life = 8
+metadata/_custom_type_script = "uid://bs3xojcdq6evl"
 
 [editable path="character"]
