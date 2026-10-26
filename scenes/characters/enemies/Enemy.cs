@@ -15,7 +15,7 @@ public partial class Enemy : CharacterBody3D
     public AnimationPlayer animationPlayer;
     public Area3D playerDetectionArea;
     public RayCast3D weaponReachRaycast;
-    public Node health;
+    public HealthComponent health;
     
     [Export]
     private Player _player;
@@ -37,7 +37,7 @@ public partial class Enemy : CharacterBody3D
         animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
         playerDetectionArea = GetNode<Area3D>("%PlayerDetectionArea");
         weaponReachRaycast = GetNode<RayCast3D>("%WeaponReachRaycast");
-        health = GetNode<Node>("%HealthComponent");
+        health = GetNode<HealthComponent>("%HealthComponent");
 
         _stateMap = new Dictionary<State, Func<Enemy, EnemyStateData, EnemyState>>
         {

@@ -9,9 +9,8 @@ public partial class EnemyStateHurt : EnemyState
 
     public override void _EnterTree()
 	{
-		_enemy.health.Call("take_damage", _data.Damage);
-		GD.Print(_data.Damage);
-		if ((bool)_enemy.health.Call("is_dead"))
+		_enemy.health.TakeDamage(_data.Damage);
+		if (_enemy.health.IsDead())
 		{
 			var data = new EnemyStateData();
             data.Impulse = 0 * Vector3.Forward * _enemy.impaleIntensity + Vector3.Up * 0;

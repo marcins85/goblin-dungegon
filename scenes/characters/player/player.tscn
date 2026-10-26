@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bum82gh3rmmy0"]
 
 [ext_resource type="Script" uid="uid://kacde3vv707u" path="res://scenes/characters/player/Player.cs" id="1_7uws0"]
-[ext_resource type="PackedScene" uid="uid://cv2xg2vk5yjx3" path="res://assets/meshes/characters/character.glb" id="2_t61fv"]
+[ext_resource type="PackedScene" uid="uid://801uvv41lf28" path="res://assets/meshes/characters/character.glb" id="2_t61fv"]
 [ext_resource type="PackedScene" uid="uid://diup0u36qxq34" path="res://scenes/characters/components/equipment_component.tscn" id="3_686vu"]
-[ext_resource type="Script" uid="uid://bs3xojcdq6evl" path="res://scenes/characters/components/health_component.gd" id="4_hss88"]
+[ext_resource type="Script" uid="uid://cfw1rp7exagtm" path="res://scenes/characters/components/HealthComponent.cs" id="4_hss88"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_frt5n"]
 margin = 0.3
@@ -38,7 +38,7 @@ collide_with_bodies = false
 
 [node name="character" parent="." unique_id=19213751 instance=ExtResource("2_t61fv")]
 
-[node name="Skeleton3D" parent="character/Armature" parent_id_path=PackedInt32Array(19213751, 1282819419) index="0" unique_id=931825254]
+[node name="Skeleton3D" parent="character/Armature" parent_id_path=PackedInt32Array(19213751, 1573748248) index="0" unique_id=1871808128]
 bones/0/position = Vector3(0, 0.63719213, -0.058584828)
 bones/1/rotation = Quaternion(-0.26081848, 1.1508321e-07, -3.109199e-08, 0.96538794)
 bones/3/rotation = Quaternion(-0.17811054, 0.0069522588, -0.84470385, 0.50468177)
@@ -60,7 +60,7 @@ bone_idx = 5
 unique_name_in_owner = true
 transform = Transform3D(0.63561225, -0.27058986, 0.72303414, 0.37693626, -0.708565, -0.5965359, 0.6737329, 0.6517031, -0.3483776, 0, 0, 0)
 
-[node name="AnimationPlayer" parent="character" index="1" unique_id=51719688]
+[node name="AnimationPlayer" parent="character" index="1" unique_id=662073062]
 autoplay = &"idle"
 
 [node name="EquipmentComponent" parent="." unique_id=1203043463 node_paths=PackedStringArray("_weaponPlaceholder", "_weaponSpawnPosition", "_weaponReachRaycast") instance=ExtResource("3_686vu")]
@@ -79,11 +79,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 target_position = Vector3(0, 0, -2)
 collision_mask = 4
 
-[node name="HealthComponent" type="Node" parent="." unique_id=803846224]
+[node name="HealthComponent" type="Node" parent="." unique_id=1063655803]
 unique_name_in_owner = true
 script = ExtResource("4_hss88")
-max_life = 30
-current_life = 30
-metadata/_custom_type_script = "uid://bs3xojcdq6evl"
+_maxLife = 30
+_currentLife = 30
+metadata/_custom_type_script = "uid://cfw1rp7exagtm"
 
 [editable path="character"]
