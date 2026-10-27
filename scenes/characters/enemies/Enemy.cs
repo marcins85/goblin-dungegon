@@ -113,7 +113,10 @@ public partial class Enemy : CharacterBody3D
     {
         var data = new EnemyStateData();
         data.Damage = damage;
-        data.ImpactDirection = sourcePlayer.GlobalPosition.DirectionTo(GlobalPosition).Normalized();
+        // var impactDirection = GlobalPosition - sourcePlayer.GlobalPosition;
+        var impactDirection = sourcePlayer.GlobalPosition.DirectionTo(GlobalPosition);
+        impactDirection.Y = 0;
+        data.ImpactDirection = impactDirection.Normalized();
         SwitchState(Enemy.State.HURT, data);
     }
 

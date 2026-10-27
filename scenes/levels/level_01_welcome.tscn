@@ -16,7 +16,7 @@
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 24, 0, 2)
 
 [node name="PlayerSpawn" parent="." index="1" unique_id=714112916]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.814203, 1.6713142, 2.0945148)
+transform = Transform3D(0.786791, 0, 0.61721945, 0, 1, 0, -0.61721945, 0, 0.786791, 14.027588, 1.6713142, 2.0945148)
 
 [node name="Floor" parent="Hallways" parent_id_path=PackedInt32Array(135223540) index="0" unique_id=1735925640]
 data = {
@@ -32,4 +32,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5763168, 0, 10.125012)
 _weaponData = ExtResource("6_td8hj")
 
 [node name="Goblin" parent="." index="5" unique_id=1405185324 instance=ExtResource("6_h8tnv")]
-transform = Transform3D(-0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881904, -3, 0, -7)
+transform = Transform3D(-0.25881904, 0, -0.9659258, 0, 1, 0, 0.9659258, 0, -0.25881904, -3, 0.32317537, -7)

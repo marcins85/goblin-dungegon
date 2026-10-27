@@ -3,7 +3,7 @@ using System;
 
 public partial class EnemyStateHurt : EnemyState
 {
-	private static readonly float KNOCKBACK_FORCE = 0.1f;
+	private static readonly float KNOCKBACK_FORCE = 1.2f;
 
     public EnemyStateHurt(Enemy enemy, EnemyStateData data = null) : base(enemy, data)
     {
@@ -29,7 +29,6 @@ public partial class EnemyStateHurt : EnemyState
     {
         _enemy.ProcessMovement((float)delta);
     }
-
 
     private void OnAnimationFinished(StringName animName)
     {
