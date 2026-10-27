@@ -3,6 +3,8 @@ using System;
 
 public partial class EnemyStateHurt : EnemyState
 {
+	private static readonly float KNOCKBACK_FORCE = 0.1f;
+
     public EnemyStateHurt(Enemy enemy, EnemyStateData data = null) : base(enemy, data)
     {
     }
@@ -10,10 +12,10 @@ public partial class EnemyStateHurt : EnemyState
     public override void _EnterTree()
 	{
 		_enemy.health.TakeDamage(_data.Damage);
+		_enemy.pushbackForce += _data.ImpactDirection * KNOCKBACK_FORCE;
 		if (_enemy.health.IsDead())
 		{
 			var data = new EnemyStateData();
-            data.Impulse = 0 * Vector3.Forward * _enemy.impaleIntensity + Vector3.Up * 0;
 			TransitionState(Enemy.State.DYING, data);
 		}
 		else
@@ -22,6 +24,12 @@ public partial class EnemyStateHurt : EnemyState
 			_enemy.animationPlayer.AnimationFinished += OnAnimationFinished;
 		}
     }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        _enemy.ProcessMovement((float)delta);
+    }
+
 
     private void OnAnimationFinished(StringName animName)
     {

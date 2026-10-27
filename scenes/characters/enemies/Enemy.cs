@@ -7,6 +7,9 @@ public partial class Enemy : CharacterBody3D
     public static readonly PackedScene EquipedItemPrefab =
         GD.Load<PackedScene>("res://scenes/equipment/equiped_item.tscn");
 
+    private static readonly float GRAVITY = 20.0f;
+    private static readonly float AIR_FRICTION = 20.0f;
+
     public PhysicalBone3D torso;
     public PhysicalBoneSimulator3D skeletonSimulator;
     public CollisionShape3D collision;
@@ -22,6 +25,8 @@ public partial class Enemy : CharacterBody3D
     [Export]
     public ulong durationBetweenAttacks;
     public ulong timeSinceLastAttack;
+
+    public Vector3 pushbackForce = Vector3.Zero;
 
     public enum State { MOVING, IMPALING, DYING, DEAD, SLASHING, HURT };
     private State _state;
@@ -104,10 +109,38 @@ public partial class Enemy : CharacterBody3D
         return false;
     }
 
-    public void TryReciveHit(int damage)
+    public void TryReciveHit(Player sourcePlayer, int damage)
     {
         var data = new EnemyStateData();
         data.Damage = damage;
+        data.ImpactDirection = sourcePlayer.GlobalPosition.DirectionTo(GlobalPosition).Normalized();
         SwitchState(Enemy.State.HURT, data);
     }
+
+    public void ProcessMovement(float delta)
+    {
+        ProcessGravity(delta);
+        ProcessPushback(delta);
+    }
+
+    private void ProcessPushback(float delta)
+    {
+        pushbackForce = pushbackForce.MoveToward(Vector3.Zero, delta * AIR_FRICTION);
+        var velocity = Velocity;
+        velocity += pushbackForce;
+        Velocity = velocity;
+        MoveAndSlide();
+    }
+
+
+    private void ProcessGravity(float delta)
+    {
+        if (!IsOnFloor())
+        {
+            var velocity = Velocity;
+            velocity.Y -= GRAVITY * delta;
+            Velocity = velocity;
+        }
+    }
+
 }

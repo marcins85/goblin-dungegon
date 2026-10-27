@@ -7,4 +7,5 @@ public partial class EnemyStateData : Resource
 	public Basis ThrownBasis {get; set;}
 	public Vector3 Impulse {get; set;}
 	public int Damage {get; set;}
+	public Vector3 ImpactDirection {get; set;}
 }

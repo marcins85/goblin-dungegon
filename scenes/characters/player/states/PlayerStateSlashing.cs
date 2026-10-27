@@ -31,7 +31,7 @@ public partial class PlayerStateSlashing : PlayerState
 				{
 					_hasEmitedDamage = true;
 					int damage = _player.equipment.weaponData.GetDamageDealt();
-					enemy.TryReciveHit(damage);
+					enemy.TryReciveHit(_player, damage);
 				}
 			}
 		}
