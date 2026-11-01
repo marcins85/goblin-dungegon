@@ -16,6 +16,7 @@ public partial class EnemyStateHurt : EnemyState
 		if (_enemy.health.IsDead())
 		{
 			var data = new EnemyStateData();
+			data.Impulse = _data.ImpactDirection * 120.0f + Vector3.Up * 80.0f;
 			TransitionState(Enemy.State.DYING, data);
 		}
 		else

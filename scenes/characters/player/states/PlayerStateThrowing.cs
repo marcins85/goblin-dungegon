@@ -13,6 +13,12 @@ public partial class PlayerStateThrowing : PlayerState
 		_player.animationPlayer.AnimationFinished += OnAnimationFinished;
 	}
 
+    public override void _PhysicsProcess(double delta)
+    {
+        _player.ProcessMovement(delta);
+    }
+
+
 	private void OnAnimationFinished(StringName animName)
 	{
 		_player.equipment.ThrowWeapon();
