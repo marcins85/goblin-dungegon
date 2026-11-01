@@ -124,6 +124,7 @@ public partial class Enemy : CharacterBody3D
     {
         ProcessGravity(delta);
         ProcessPushback(delta);
+        MoveAndSlide();
     }
 
     private void ProcessPushback(float delta)
@@ -132,7 +133,6 @@ public partial class Enemy : CharacterBody3D
         var velocity = Velocity;
         velocity += pushbackForce;
         Velocity = velocity;
-        MoveAndSlide();
     }
 
 
