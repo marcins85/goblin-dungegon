@@ -7,11 +7,6 @@
 [node name="BaseRoom" type="Node3D" unique_id=1324909713]
 script = ExtResource("1_oxyh5")
 
-[node name="Floors" type="GridMap" parent="." unique_id=524320100]
-unique_name_in_owner = true
-mesh_library = ExtResource("1_43ixu")
-cell_center_y = false
-
 [node name="Ceilings" type="GridMap" parent="." unique_id=718247650]
 unique_name_in_owner = true
 mesh_library = ExtResource("2_4x8xk")
@@ -19,3 +14,13 @@ cell_center_y = false
 data = {
 "cells": PackedInt32Array(134, 65451, 1441792)
 }
+
+[node name="RoomNavigation" type="NavigationRegion3D" parent="." unique_id=229338800]
+use_edge_connections = false
+
+[node name="Floors" type="GridMap" parent="RoomNavigation" unique_id=524320100]
+unique_name_in_owner = true
+mesh_library = ExtResource("1_43ixu")
+cell_center_y = false
+
+[node name="Enemies" type="Node" parent="." unique_id=154432895]

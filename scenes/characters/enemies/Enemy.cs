@@ -19,12 +19,15 @@ public partial class Enemy : CharacterBody3D
     public Area3D playerDetectionArea;
     public RayCast3D weaponReachRaycast;
     public HealthComponent health;
+    public NavigationAgent3D navAgent;
     
     [Export]
-    private Player _player;
+    public Player player;
     [Export]
     public ulong durationBetweenAttacks;
     public ulong timeSinceLastAttack;
+    [Export]
+    public float speed;
 
     public Vector3 pushbackForce = Vector3.Zero;
 
@@ -43,6 +46,7 @@ public partial class Enemy : CharacterBody3D
         playerDetectionArea = GetNode<Area3D>("%PlayerDetectionArea");
         weaponReachRaycast = GetNode<RayCast3D>("%WeaponReachRaycast");
         health = GetNode<HealthComponent>("%HealthComponent");
+        navAgent = GetNode<NavigationAgent3D>("%NavigationAgent3D");
 
         _stateMap = new Dictionary<State, Func<Enemy, EnemyStateData, EnemyState>>
         {
@@ -62,7 +66,7 @@ public partial class Enemy : CharacterBody3D
     {
         if (body is Player player)
         {
-            _player = player;
+            this.player = player;
         }
     }
 
@@ -96,7 +100,7 @@ public partial class Enemy : CharacterBody3D
 
     public bool HasRegisteredPlayer()
     {
-        return _player != null && IsInstanceValid(_player);
+        return player != null && IsInstanceValid(player);
     }
 
     public bool IsPlayerWithinReach()
@@ -111,6 +115,7 @@ public partial class Enemy : CharacterBody3D
 
     public void TryReciveHit(Player sourcePlayer, int damage)
     {
+        player = sourcePlayer;
         var data = new EnemyStateData();
         data.Damage = damage;
         // var impactDirection = GlobalPosition - sourcePlayer.GlobalPosition;

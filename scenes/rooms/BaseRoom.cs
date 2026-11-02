@@ -10,8 +10,8 @@ public partial class BaseRoom : Node3D
 
 	public override void _Ready()
 	{
-		_ceilings = GetNode<GridMap>("Ceilings");
-		_floors = GetNode<GridMap>("Floors");
+		_ceilings = GetNode<GridMap>("%Ceilings");
+		_floors = GetNode<GridMap>("%Floors");
 
 		FillCeilings();
 	}
