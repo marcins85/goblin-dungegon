@@ -44,6 +44,7 @@ public partial class Player : CharacterBody3D
 		health = GetNode<HealthComponent>("%HealthComponent");
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		GameState.Instance.RegisterPlayer(this);
 
 		_stateMap = new Dictionary<State, Func<Player, PlayerState>>
 		{

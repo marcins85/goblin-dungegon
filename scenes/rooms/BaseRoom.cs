@@ -6,14 +6,17 @@ public partial class BaseRoom : Node3D
 {
 	private GridMap _ceilings;
 	private GridMap _floors;
+	private Node _enemies;
 	private List<int> _cellIdsWithNoCeiling	= new();
 
 	public override void _Ready()
 	{
 		_ceilings = GetNode<GridMap>("%Ceilings");
 		_floors = GetNode<GridMap>("%Floors");
+		_enemies = GetNode<Node>("%Enemies");
 
 		FillCeilings();
+		PrepEnemies();
 	}
 
     private void FillCeilings()
@@ -32,6 +35,22 @@ public partial class BaseRoom : Node3D
 			{
 				_ceilings.SetCellItem(cellCords, 0);
 			}
+		}
+    }
+
+	private void PrepEnemies()
+	{
+		foreach(Enemy enemy in _enemies.GetChildren())
+		{
+			enemy.Screamed += OnEnemyScreamed;
+		}
+	}
+
+    private void OnEnemyScreamed()
+    {
+        foreach(Enemy enemy in _enemies.GetChildren())
+		{
+			enemy.player = GameState.Instance.CurrentPlayer;
 		}
     }
 

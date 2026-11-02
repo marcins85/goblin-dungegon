@@ -20,6 +20,9 @@ public partial class Enemy : CharacterBody3D
     public RayCast3D weaponReachRaycast;
     public HealthComponent health;
     public NavigationAgent3D navAgent;
+
+    [Signal]
+    public delegate void ScreamedEventHandler();
     
     [Export]
     public Player player;
@@ -92,6 +95,8 @@ public partial class Enemy : CharacterBody3D
 
     public void Impale(ThrowedItem thrownItem, Basis basis)
     {
+        EmitSignal(SignalName.Screamed);
+
         var data = new EnemyStateData();
         data.ThrownItem = thrownItem;
         data.ThrownBasis = basis;
@@ -115,6 +120,8 @@ public partial class Enemy : CharacterBody3D
 
     public void TryReciveHit(Player sourcePlayer, int damage)
     {
+        EmitSignal(SignalName.Screamed);
+
         player = sourcePlayer;
         var data = new EnemyStateData();
         data.Damage = damage;

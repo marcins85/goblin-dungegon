@@ -12,6 +12,7 @@ public partial class EnemyStateImpaling : EnemyState
 		var impaledItem = Enemy.EquipedItemPrefab.Instantiate<EquipedItem>();
         if (impaledItem != null)
         {
+            GameEvents.Instance.EmitSignal(GameEvents.SignalName.ImpactFelt, (int)GameEvents.ImpactIntensity.MEDIUM);
             impaledItem.WeaponData = _data.ThrownItem.WeaponData;
             _enemy.torso.AddChild(impaledItem);
             var itemBasis = new Transform3D(_data.ThrownBasis, impaledItem.GlobalPosition);
