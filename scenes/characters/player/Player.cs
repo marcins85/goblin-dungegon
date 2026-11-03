@@ -36,7 +36,7 @@ public partial class Player : CharacterBody3D
 
 	public override void _Ready()
 	{
-		_camera = GetNode<Camera3D>("%Camera3D");
+		_camera = GetNode<Camera3D>("%MainCamera");
 		animationPlayer = GetNode<AnimationPlayer>("character/AnimationPlayer");
 		_selectRaycast = _camera.GetNode<RayCast3D>("%SelectRaycast");
 		equipment = GetNode<EquipmentComponent>("%EquipmentComponent");
