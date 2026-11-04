@@ -20,7 +20,7 @@ public partial class EnemyStateImpaling : EnemyState
             impaledItem.TranslateObjectLocal(impaledItem.WeaponData.impaleLocalTranslation);
             impaledItem.RotateObjectLocal(Vector3.Up, impaledItem.WeaponData.imapleLocalRotation);
             _data.ThrownItem.QueueFree();
-
+            FxHelper.Instance.CreateBloodFx(_enemy.head.GlobalTransform);
             var data = new EnemyStateData();
             data.Impulse = _data.ThrownBasis * Vector3.Forward * _enemy.impaleIntensity + Vector3.Up * _enemy.impaleIntensity;
             TransitionState(Enemy.State.DYING, data);

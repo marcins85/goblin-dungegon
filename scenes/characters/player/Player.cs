@@ -60,6 +60,11 @@ public partial class Player : CharacterBody3D
 	{
 		_inputDir = Input.GetVector("strafe_left", "strafe_right", "backward", "forward");
 		_movementSpeed = Input.IsActionPressed("run") ? _runSpeed : _walkSpeed;
+
+		if (Input.IsActionJustPressed("kick"))
+		{
+			GameEvents.Instance.EmitSignal(GameEvents.SignalName.PlayerHurt, this);
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)

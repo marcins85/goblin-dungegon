@@ -15,6 +15,7 @@ public partial class EnemyStateHurt : EnemyState
 		_enemy.pushbackForce += _data.ImpactDirection * KNOCKBACK_FORCE;
 		if (_enemy.health.IsDead())
 		{
+            FxHelper.Instance.CreateBloodFx(_enemy.head.GlobalTransform);
 			GameEvents.Instance.EmitSignal(GameEvents.SignalName.ImpactFelt, (int)GameEvents.ImpactIntensity.MEDIUM);
 			var data = new EnemyStateData();
 			data.Impulse = _data.ImpactDirection * 120.0f + Vector3.Up * 80.0f;
@@ -22,6 +23,7 @@ public partial class EnemyStateHurt : EnemyState
 		}
 		else
 		{
+            FxHelper.Instance.CreateBloodFx(_enemy.head.GlobalTransform, false);
 			GameEvents.Instance.EmitSignal(GameEvents.SignalName.ImpactFelt, (int)GameEvents.ImpactIntensity.LOW);
 			_enemy.animationPlayer.Play("hurt");
 			_enemy.animationPlayer.AnimationFinished += OnAnimationFinished;

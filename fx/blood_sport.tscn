@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://dckx6r3f2jmbm"]
 
+[ext_resource type="Script" uid="uid://cbgfvd80qbyqh" path="res://fx/BloodSport.cs" id="1_sk4k8"]
+
 [sub_resource type="Curve" id="Curve_hunql"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -85,6 +87,7 @@ material = SubResource("StandardMaterial3D_khn4m")
 size = Vector3(0.05, 0.05, 0.05)
 
 [node name="BloodSport" type="Node3D" unique_id=2046699826]
+script = ExtResource("1_sk4k8")
 
 [node name="Blood" type="GPUParticles3D" parent="." unique_id=699572199]
 unique_name_in_owner = true
@@ -98,6 +101,7 @@ process_material = SubResource("ParticleProcessMaterial_khn4m")
 draw_pass_1 = SubResource("CylinderMesh_frt5n")
 
 [node name="Sparks" type="GPUParticles3D" parent="." unique_id=1069327475]
+unique_name_in_owner = true
 emitting = false
 amount = 60
 lifetime = 0.5

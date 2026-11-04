@@ -11,6 +11,7 @@ public partial class Enemy : CharacterBody3D
     private static readonly float AIR_FRICTION = 20.0f;
 
     public PhysicalBone3D torso;
+    public PhysicalBone3D head;
     public PhysicalBoneSimulator3D skeletonSimulator;
     public CollisionShape3D collision;
     public EquipmentComponent equipment;
@@ -42,6 +43,7 @@ public partial class Enemy : CharacterBody3D
     public override void _Ready()
     {
         torso = GetNode<PhysicalBone3D>("%Physical Bone Torso");
+        head = GetNode<PhysicalBone3D>("%Physical Bone Head");
         skeletonSimulator = GetNode<PhysicalBoneSimulator3D>("%PhysicalBoneSimulator3D");
         collision = GetNode<CollisionShape3D>("%CollisionShape");
         equipment = GetNode<EquipmentComponent>("%EquipmentComponent");

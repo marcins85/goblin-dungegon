@@ -9,9 +9,11 @@ public partial class GameEvents : Node
 	[Signal]
 	public delegate void ImpactFeltEventHandler(int intensity);
 
+    [Signal]
+	public delegate void PlayerHurtEventHandler(Player player);
+
     public override void _Ready()
     {
         Instance = this;
     }
-
 }
