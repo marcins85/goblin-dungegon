@@ -1,22 +1,22 @@
 [gd_scene format=3 uid="uid://gbrq1dvge4vt"]
 
 [ext_resource type="Script" uid="uid://drg1mb5fcik16" path="res://scenes/levels/BaseLevel.cs" id="1_md458"]
-[ext_resource type="MeshLibrary" uid="uid://dhj0frwtr6nfm" path="res://assets/meshlibs/walls-tiles.meshlib" id="2_uk53i"]
+[ext_resource type="MeshLibrary" uid="uid://5befjqaqells" path="res://assets/meshlibs/walls-tiles.meshlib" id="2_uk53i"]
 
-[node name="BaseLevel" type="Node3D" unique_id=1093852638]
+[node name="BaseLevel" type="Node3D" unique_id=113800226]
 script = ExtResource("1_md458")
 
-[node name="Rooms" type="Node3D" parent="." unique_id=586919552]
+[node name="Rooms" type="Node3D" parent="." unique_id=540883177]
 
-[node name="PlayerSpawn" type="Node3D" parent="." unique_id=714112916]
+[node name="PlayerSpawn" type="Node3D" parent="." unique_id=588236999]
 unique_name_in_owner = true
 
-[node name="Hallways" type="Node3D" parent="." unique_id=135223540]
+[node name="Hallways" type="Node3D" parent="." unique_id=715007728]
 
-[node name="Floor" type="GridMap" parent="Hallways" unique_id=1735925640]
+[node name="Floors" type="GridMap" parent="Hallways" unique_id=1456009944]
 mesh_library = ExtResource("2_uk53i")
+cell_size = Vector3(1, 1, 1)
 cell_center_y = false
 collision_mask = 0
-data = {
-"cells": PackedInt32Array(65523, 65530, 3)
-}
+
+[node name="Doors" type="Node3D" parent="." unique_id=2141035982]

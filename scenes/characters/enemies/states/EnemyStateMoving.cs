@@ -23,7 +23,16 @@ public partial class EnemyStateMoving : EnemyState
             var targetPosition = _enemy.player.GlobalPosition;
             targetPosition.Y = _enemy.GlobalPosition.Y;
             var targetTransform = _enemy.GlobalTransform.LookingAt(targetPosition);
-            _enemy.GlobalBasis = _enemy.GlobalBasis.Slerp(targetTransform.Basis, (float)delta * SPEED_ROTATION);
+            GD.Print(_enemy.GlobalBasis.Scale);
+            GD.Print(targetTransform.Basis.Scale);
+            var currentBasis = _enemy.GlobalBasis.Orthonormalized();
+            var targetBasis = targetTransform.Basis.Orthonormalized();
+
+            _enemy.GlobalBasis = currentBasis.Slerp(
+                targetBasis,
+                (float)delta * SPEED_ROTATION
+            );
+
             if (_enemy.IsPlayerWithinReach())
             {
                 _enemy.animationPlayer.Play("idle");

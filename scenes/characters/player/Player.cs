@@ -29,7 +29,7 @@ public partial class Player : CharacterBody3D
 	public RayCast3D weaponReachRaycast;
 	public HealthComponent health;
 
-	public enum State { MOVING, PICKING_UP, THROWING, SLASHING };
+	public enum State { MOVING, PICKING_UP, THROWING, SLASHING, KICKING };
 	private State _state;
 	private PlayerState _stateNode;
 	private Dictionary<State, Func<Player, PlayerState>> _stateMap;
@@ -48,6 +48,7 @@ public partial class Player : CharacterBody3D
 
 		_stateMap = new Dictionary<State, Func<Player, PlayerState>>
 		{
+			{ State.KICKING, Player => new PlayerStateKicking(this) },
 			{ State.MOVING, Player => new PlayerStateMoving(this) },
 			{ State.PICKING_UP, Player => new PlayerStatePickingUp(this) },
 			{ State.THROWING, Player => new PlayerStateThrowing(this) },
@@ -61,10 +62,10 @@ public partial class Player : CharacterBody3D
 		_inputDir = Input.GetVector("strafe_left", "strafe_right", "backward", "forward");
 		_movementSpeed = Input.IsActionPressed("run") ? _runSpeed : _walkSpeed;
 
-		if (Input.IsActionJustPressed("kick"))
-		{
-			GameEvents.Instance.EmitSignal(GameEvents.SignalName.PlayerHurt, this);
-		}
+		// if (Input.IsActionJustPressed("kick"))
+		// {
+		// 	GameEvents.Instance.EmitSignal(GameEvents.SignalName.PlayerHurt, this);
+		// }
 	}
 
 	public override void _PhysicsProcess(double delta)

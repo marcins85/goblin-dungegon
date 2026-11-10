@@ -24,6 +24,11 @@ public partial class PlayerStateMoving : PlayerState
 		{
 			TransitionState(Player.State.SLASHING);
 		}
+
+		if (Input.IsActionJustPressed("kick"))
+		{
+			TransitionState(Player.State.KICKING);
+		}
 	}
 
 	public override void _PhysicsProcess(double delta)
