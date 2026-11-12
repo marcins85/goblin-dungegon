@@ -24,6 +24,7 @@ public partial class Player : CharacterBody3D
 	private Vector2 _inputDir = Vector2.Zero;
 	private float _movementSpeed;
 	private RayCast3D _selectRaycast;
+	public RayCast3D doorRaycast;
 	public IHighlightable currentPickableFocusedItem = null;
 	public EquipmentComponent equipment;
 	public RayCast3D weaponReachRaycast;
@@ -42,6 +43,7 @@ public partial class Player : CharacterBody3D
 		equipment = GetNode<EquipmentComponent>("%EquipmentComponent");
 		weaponReachRaycast = GetNode<RayCast3D>("%WeaponReachRaycast");
 		health = GetNode<HealthComponent>("%HealthComponent");
+		doorRaycast = GetNode<RayCast3D>("%DoorRaycast");
 
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		GameState.Instance.RegisterPlayer(this);

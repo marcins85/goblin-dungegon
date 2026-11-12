@@ -13,6 +13,11 @@ public partial class PlayerStateKicking : PlayerState
     {
         _player.animationPlayer.Play("kick");
 		_player.animationPlayer.AnimationFinished += OnAnimationFinished;
+        if (_player.doorRaycast.IsColliding())
+        {
+            Door door = _player.doorRaycast.GetCollider() as Door;
+            door.Open(_player.GlobalTransform);
+        }
     }
 
     public override void _PhysicsProcess(double delta)
